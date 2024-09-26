@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import personagensRouter from "./personagens.routes.js";
 import emocoesRoutes from "./emocoes.routes.js";
 
 const routes = Router();
@@ -13,6 +13,7 @@ routes.get("/2tds2", (req,res) => {
 });
 
 routes.use("/emocoes", emocoesRoutes);
+routes.use("/personagens", personagensRouter);
 
 export default routes;
 

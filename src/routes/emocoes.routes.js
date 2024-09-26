@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 const emocoesRouter = Router()
-const emocoes = [
+let emocoes = [
     {
         id: 1,
         nome: "Alegria",
@@ -52,6 +52,45 @@ emocoesRouter.get("/:id", (req, res) => {
     return res.status(200).send({
         message: "emoção encontrada", emocao,
     })
+});
+
+emocoesRouter.put("/:id", (req, res)=> {
+    const { id } = req.params;
+
+    const emocao = emocoes.find((emotion) => emotion.id == id);
+
+    if (!emocao) {
+        return res.status(404).send({
+            message: "emoção não encontrada!",
+        });
+    }
+
+    const { nome, cor } = req.body;
+    emocao.nome = nome;
+    emocao.cor = cor;
+
+    return res.status(200).send({
+        message: "emoção encontrada!", 
+        emocao
+    });
+})
+
+    emocoesRouter.delete("/:id", (req, res)=>{
+        const { id } = req.params;
+        const emocao = emocoes.find((emotion)=> emotion.id == id);
+
+    if (!emocao) {
+        return res.status(404).send({
+            message: "emoção não encontrada!",
+        });
+    }
+
+    emocoes = emocoes.filter((emotion) => emotion.id != id)
+
+    return res.status(200).send({
+        message: "emoção encontrada!", 
+        emocao
+    });
 });
 
 export default emocoesRouter
